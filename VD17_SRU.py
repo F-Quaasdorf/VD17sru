@@ -72,13 +72,13 @@ def parse_record(record):
 def to_df(records):    
     return pd.DataFrame(records)
 
-# Fetch records
-records = vd17_sru("pica.tit=de statu imperii") #Query here
+# Records erhalten
+records = vd17_sru("pica.tit=de statu imperii") # Abfrage hier, nach PICA
 
-# Parse records
+# Parser
 parsed_records = [parse_record(record) for record in records]
 
-# Convert to DataFrame
+# Umwandlung in DataFrame
 df = to_df(parsed_records)
 
 # Print DataFrame
