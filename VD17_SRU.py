@@ -16,11 +16,15 @@ def vd17_sru(query):
     session = requests.Session()
     records = []
     start_record = 1
+    first_request = True
     
     while True:
         parameters["startRecord"] = start_record
         response = session.get(base_url, params=parameters)
-        print(response.url)
+        if first_request:
+            print(response.url)
+            first_request = False
+            
         if response.status_code != 200:
             print(f"Error fetching data: {response.status_code}")
             break
