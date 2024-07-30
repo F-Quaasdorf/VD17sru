@@ -6,7 +6,7 @@ import plotly.io as pio
 
 # Helper functions
 def convert_year(value):
-    # Wandelt römische Zahlen in arabische um, Ausgabe nicht int, sondern str!
+    # Converts Roman numerals into strings
     def convert_roman(roman):
         roman_values = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
         
