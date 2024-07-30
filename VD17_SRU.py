@@ -79,7 +79,7 @@ def to_df(records):
     return pd.DataFrame(records)
 
 # Fetch records
-records = vd17_sru("pica.tit=de statu imperii") # Abfrage hier, nach PICA
+records = vd17_sru("pica.tit=de statu imperii") # Query via PICA
 
 # Parse records
 parsed_records = [parse_record(record) for record in records]
