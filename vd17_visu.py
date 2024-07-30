@@ -7,9 +7,8 @@ import plotly.io as pio
 # Helper functions
 def convert_year(value):
     # Wandelt römische Zahlen in arabische um, Ausgabe nicht int, sondern str!
-    def roman_to_int(roman):
-        roman_values = {"M": 1000, "D": 500, "C": 100, 
-                        "L": 50, "X": 10, "V": 5, "I": 1}
+    def convert_roman(roman):
+        roman_values = {"I": 1, "V": 5, "X": 10, "L": 50, "C": 100, "D": 500, "M": 1000}
         
         total = 0
         prev_value = 0
@@ -26,7 +25,7 @@ def convert_year(value):
 
     # Define a helper function to check if a string is a valid Roman numeral
     def is_roman_numeral(s):        
-        # This regex pattern matches valid Roman numerals from 1 to 3999
+        # Matches valid and irregular Roman numerals, e.g. 'IIII' instead of 'IV'
         pattern = '^M{0,4}(CM|CD|D?C{0,3})(XC|XL|L?X{0,4})(IX|IV|V?I{0,4})$'
         
         return bool(re.match(pattern, s))
@@ -54,7 +53,7 @@ def convert_year(value):
         # Remove non-digit and non-Roman numeral characters
         clean_value = re.sub(r'[^IVXLCDM0-9]', '', value)
         if is_roman_numeral(clean_value):
-            result = roman_to_int(clean_value)
+            result = convert_roman(clean_value)
         else:
             result = value
     
@@ -64,7 +63,7 @@ def convert_year(value):
     
     return result
 
-# Säulendiagramm zu den haltenden Einrichtungen der gefundenen Werke
+# Bar chart of holding institutions
 def location_graph(df):
     library_codes = df["Einrichtung"]
     
@@ -82,23 +81,23 @@ def location_graph(df):
     library_counts = pd.Series(library_list).value_counts()
     
     fig_loc = px.bar(library_counts, x=library_counts.index, y=library_counts.values,
-                     labels={'x': 'Einrichtung', 'y': 'Count'},
-                     title='Count of Works by Holding Institutions')
+                     labels={'x': 'Einrichtung', 'y': 'Anzahl'},
+                     title='Anzahl der Werke nach Einrichtungen')
         
     return fig_loc
 
-# Säulendiagramm zu den Veröffentlichungsjahren
+# Bar chart of publication years
 def publication_date_graph(df):
     dates = df["Erscheinungsjahr"].apply(convert_year)
     date_counts = dates.value_counts(dropna=False).sort_index()
     
     fig_dates = px.bar(date_counts, x=date_counts.index, y=date_counts.values,
                        labels={'x': 'Erscheinungsjahr', 'y': 'Count'},
-                       title='Count of Works by Publication Year')
+                       title='Anzahl der Werke nach Veröffentlichungsjahr')
     
     return fig_dates
 
-# Säulendiagramm zu den Sprachen
+# Bar chart of languages
 def language_graph(df):
     language_codes = df["Sprache"]
     language_list = []
@@ -116,11 +115,11 @@ def language_graph(df):
     
     fig_lang = px.bar(language_counts, x=language_counts.index, y=language_counts.values,
                       labels={'x': 'Sprache', 'y': 'Count'},
-                      title='Count of Works by Language')
+                      title='Anzahl der Werke nach Sprache')
         
     return fig_lang
 
-# Säulendiagramm zu den Sprachen über die Jahre
+# Bar chart of languages by publication years
 def language_year_graph(df):
     df['Cleaned_Year'] = df['Erscheinungsjahr'].apply(convert_year)
     
@@ -139,9 +138,10 @@ def language_year_graph(df):
     
     return fig_lang_year
 
+# Output in browser
 pio.renderers.default = 'browser'
 
-# Hier CSV-Datei einlesen lassen
+# Read a CSV named 'DataFrame' with columns 'Einrichtung' for library codes, 'Erscheinungsjahr' for publication dates, and 'Sprache' for languages
 df = pd.read_csv("DataFrame.csv")
 
 fig_dates = publication_date_graph(df)

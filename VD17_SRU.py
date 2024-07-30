@@ -76,15 +76,18 @@ def parse_record(record):
 def to_df(records):    
     return pd.DataFrame(records)
 
-# Records erhalten
+# Fetch records
 records = vd17_sru("pica.tit=de statu imperii") # Abfrage hier, nach PICA
 
-# Parser
+# Parse records
 parsed_records = [parse_record(record) for record in records]
 
-# Umwandlung in DataFrame
+# Convert to DataFrame
 df = to_df(parsed_records)
 
 # Print DataFrame
 pd.set_option('display.max_columns', None)
 print(df)
+
+# Save to CSV
+df.to_csv("DataFrame.csv", encoding="utf-8")
