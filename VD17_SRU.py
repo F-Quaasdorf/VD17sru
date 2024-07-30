@@ -68,7 +68,8 @@ def parse_record(record):
         "Verfasser": get_single_text("//marc:datafield[@tag='100']/marc:subfield[@code='a']"),
         "Titel": get_single_text("//marc:datafield[@tag='245']/marc:subfield[@code='a']"),
         "Erscheinungsort": get_multiple_texts("//marc:datafield[@tag='264']/marc:subfield[@code='a']"),
-        "Erscheinungsjahr": get_single_text("//marc:datafield[@tag='264']/marc:subfield[@code='c']")
+        "Erscheinungsjahr": get_single_text("//marc:datafield[@tag='264']/marc:subfield[@code='c']"),
+        "Einrichtung": get_multiple_texts("//marc:datafield[@tag='924']/marc:subfield[@code='b']")
     }
     
     return meta_dict
