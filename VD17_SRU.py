@@ -69,6 +69,7 @@ def parse_record(record):
         "Titel": get_single_text("//marc:datafield[@tag='245']/marc:subfield[@code='a']"),
         "Erscheinungsort": get_multiple_texts("//marc:datafield[@tag='264']/marc:subfield[@code='a']"),
         "Erscheinungsjahr": get_single_text("//marc:datafield[@tag='264']/marc:subfield[@code='c']"),
+        "Sprache": get_multiple_texts("//marc:datafield[@tag='041']/marc:subfield[@code='a']"),
         "Einrichtung": get_multiple_texts("//marc:datafield[@tag='924']/marc:subfield[@code='b']")
     }
     

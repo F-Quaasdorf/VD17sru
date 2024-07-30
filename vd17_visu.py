@@ -92,7 +92,7 @@ def publication_date_graph(df):
     date_counts = dates.value_counts(dropna=False).sort_index()
     
     fig_dates = px.bar(date_counts, x=date_counts.index, y=date_counts.values,
-                       labels={'x': 'Erscheinungsjahr', 'y': 'Count'},
+                       labels={'x': 'Erscheinungsjahr', 'y': 'Anzahl'},
                        title='Anzahl der Werke nach Veröffentlichungsjahr')
     
     return fig_dates
@@ -114,7 +114,7 @@ def language_graph(df):
     language_counts = pd.Series(language_list).value_counts()
     
     fig_lang = px.bar(language_counts, x=language_counts.index, y=language_counts.values,
-                      labels={'x': 'Sprache', 'y': 'Count'},
+                      labels={'x': 'Sprache', 'y': 'Anzahl'},
                       title='Anzahl der Werke nach Sprache')
         
     return fig_lang
@@ -123,7 +123,7 @@ def language_graph(df):
 def language_year_graph(df):
     df['Cleaned_Year'] = df['Erscheinungsjahr'].apply(convert_year)
     
-    # Split the 'Sprache' column into individual languages, clean them, and remove extraneous characters
+    # Split the 'Sprache' column into individual languages, clean them, and remove extraneous characters. Not needed if the elements in this column are lists
     df['Sprache'] = df['Sprache'].apply(lambda x: [lang.strip("[]' ") for lang in x.split(',')])
 
     # Explode the 'Sprache' column into individual rows
