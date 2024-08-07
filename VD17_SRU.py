@@ -63,7 +63,6 @@ def parse_record(record):
         return [elem.text for elem in xml.xpath(xpath_expr, namespaces=namespaces)] or ["N.N."]
     
     meta_dict = {
-        "IDN": get_single_text("//marc:controlfield[@tag='001']"),
         "VD-Nummer": get_single_text("//marc:datafield[@tag='024']/marc:subfield[@code='a']"),
         "Verfasser": get_single_text("//marc:datafield[@tag='100']/marc:subfield[@code='a']"),
         "Titel": get_single_text("//marc:datafield[@tag='245']/marc:subfield[@code='a']"),
