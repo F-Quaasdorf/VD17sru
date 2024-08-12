@@ -48,9 +48,7 @@ def vd17_sru(query):
     return records
 
 def parse_record(record):    
-    namespaces = {
-        "marc": "http://www.loc.gov/MARC21/slim"
-    }
+    namespaces = {"marc": "http://www.loc.gov/MARC21/slim"}
     xml = etree.fromstring(unicodedata.normalize("NFC", record))
     
     def get_single_text(xpath_expr):
