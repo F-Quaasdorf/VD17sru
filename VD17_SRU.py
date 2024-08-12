@@ -4,7 +4,7 @@ from lxml import etree
 import pandas as pd
 
 def vd17_sru(query):    
-    base_url = "http://sru.k10plus.de/vd17" #Auch für VD18 nutzbar: http://sru.k10plus.de/vd18
+    base_url = "http://sru.k10plus.de/vd17" # VD18: http://sru.k10plus.de/vd18
     parameters = {
         "recordSchema": "marcxml",
         "operation": "searchRetrieve",
