@@ -58,7 +58,7 @@ def parse_record(record):
             return "N.N."
     
     def get_multiple_texts(xpath_expr):
-        return [elem.text for elem in xml.xpath(xpath_expr, namespaces=namespaces)] or ["N.N."]
+        return ", ".join([elem.text for elem in xml.xpath(xpath_expr, namespaces=namespaces)]) or "N.N."
     
     meta_dict = {
         "VD-Nummer": get_single_text("//marc:datafield[@tag='024']/marc:subfield[@code='a']"),
@@ -67,6 +67,7 @@ def parse_record(record):
         "Erscheinungsort": get_multiple_texts("//marc:datafield[@tag='264']/marc:subfield[@code='a']"),
         "Erscheinungsjahr": get_single_text("//marc:datafield[@tag='264']/marc:subfield[@code='c']"),
         "Sprache": get_multiple_texts("//marc:datafield[@tag='041']/marc:subfield[@code='a']"),
+        "Fingerprint": get_single_text("//marc:datafield[@tag='041']/marc:subfield[@code='a']"), #TODO: Heraussuchen
         "Einrichtung": get_multiple_texts("//marc:datafield[@tag='924']/marc:subfield[@code='b']")
     }
     
