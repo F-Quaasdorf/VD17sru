@@ -67,7 +67,7 @@ def parse_record(record):
         "Erscheinungsort": get_multiple_texts("//marc:datafield[@tag='264']/marc:subfield[@code='a']"),
         "Erscheinungsjahr": get_single_text("//marc:datafield[@tag='264']/marc:subfield[@code='c']"),
         "Sprache": get_multiple_texts("//marc:datafield[@tag='041']/marc:subfield[@code='a']"),
-        "Fingerprint": get_single_text("//marc:datafield[@tag='041']/marc:subfield[@code='a']"), #TODO: Heraussuchen
+        "Fingerprint": get_single_text("//marc:datafield[@tag='026']/marc:subfield[@code='e']"), 
         "Einrichtung": get_multiple_texts("//marc:datafield[@tag='924']/marc:subfield[@code='b']")
     }
     
