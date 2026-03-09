@@ -4,7 +4,7 @@ from lxml import etree
 import pandas as pd
 
 def vd17_sru(query):    
-    base_url = "http://sru.k10plus.de/vd17" # VD18: http://sru.k10plus.de/vd18
+    base_url = "http://sru.k10plus.de/vd18" # VD17: "http://sru.k10plus.de/vd17"
     parameters = {
         "recordSchema": "marcxml",
         "operation": "searchRetrieve",
@@ -61,7 +61,7 @@ def parse_record(record):
         return ", ".join([elem.text for elem in xml.xpath(xpath_expr, namespaces=namespaces)]) or "N.N."
     
     meta_dict = {
-        "VD-Nummer": get_single_text("//marc:datafield[@tag='024']/marc:subfield[@code='a']"),
+        "VD-Nummer": get_single_text("//marc:datafield[@tag='024'][marc:subfield[@code='2']='vd18']/marc:subfield[@code='a']"),
         "Verfasser": get_single_text("//marc:datafield[@tag='100']/marc:subfield[@code='a']"),
         "Titel": get_single_text("//marc:datafield[@tag='245']/marc:subfield[@code='a']"),
         "Erscheinungsort": get_multiple_texts("//marc:datafield[@tag='264']/marc:subfield[@code='a']"),
@@ -77,17 +77,18 @@ def to_df(records):
     return pd.DataFrame(records)
 
 # Fetch records
-records = vd17_sru("pica.tit=de statu imperii") # Query via PICA
+records = vd17_sru("pica.tit='de statu imperii'") # Query via PICA. für VD-Nr.: pica.all
 
 # Parse records
 parsed_records = [parse_record(record) for record in records]
 
 # Convert to DataFrame
 df = to_df(parsed_records)
+df = df.drop_duplicates(keep="first")
 
 # Print DataFrame
 pd.set_option('display.max_columns', None)
 print(df)
 
 # Save to CSV
-df.to_csv("DataFrame.csv", encoding="utf-8")
+#df.to_csv("DataFrame.csv", encoding="utf-8")
